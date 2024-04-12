@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { UserSearch, UsersList } from "domains/User/components";
 
 import { Input } from "antd";
+import { UsersList } from "domains/User/components";
 import debounce from "lodash/debounce";
 import { useUserStore } from "./store/store";
 
@@ -18,6 +18,10 @@ const App: React.FC = () => {
     }, 800),
     [setQuery, fetchUsers]
   );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+  };
 
   useEffect(() => {
     const trimmedValue = inputValue.trim();
@@ -27,7 +31,7 @@ const App: React.FC = () => {
     } else {
       // Clear the query state and the user list when input is empty
       setQuery("");
-      setUsers([]); // Assuming you have a method to clear users in your store
+      setUsers([]);
     }
   }, [inputValue, setQuery, fetchUsers, setUsers, debouncedFetch]);
   return (
@@ -35,7 +39,7 @@ const App: React.FC = () => {
       <Input
         placeholder="Search GitHub Users"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={handleInputChange}
       />
       <UsersList />
     </div>

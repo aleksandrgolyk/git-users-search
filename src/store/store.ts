@@ -32,8 +32,38 @@ export const useUserStore = create<UserStore>((set, get) => ({
   page: 1,
   setQuery: (query: string) => set({ query, page: 1 }),
   setUsers: (users: User[]) => set({ users }),
-  fetchUsers: async (query: string, page: number = 1) => {
-    if (get().isLoading) return;
+  // fetchUsers: async (query: string, page: number = 1) => {
+  //   if (get().isLoading) return;
+  //   set({ isLoading: true, error: null });
+  //   try {
+  //     const response = await fetch(
+  //       `https://api.github.com/search/users?q=${query}&page=${page}&per_page=10`
+  //     );
+  //     if (!response.ok) {
+  //       if (response.status === 403) {
+  //         throw new Error(
+  //           "You have hit GitHub's rate limit. Please wait a few seconds before trying again."
+  //         );
+  //       }
+  //       throw new Error("Failed to fetch");
+  //     }
+  //     const data = await response.json();
+  //     set({
+  //       users: page === 1 ? data.items : [...get().users, ...data.items],
+  //       hasMore: data?.items?.length === 10,
+  //       isLoading: false,
+  //       page: page + 1,
+  //     });
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       set({ error: error.message, isLoading: false });
+  //     } else {
+  //       set({ error: "An unexpected error occurred", isLoading: false });
+  //     }
+  //   }
+  // },
+  fetchUsers: async (query: string, page: number = get().page) => {
+    if (get().isLoading || !get().hasMore) return; // Check if loading or no more users to fetch
     set({ isLoading: true, error: null });
     try {
       const response = await fetch(
@@ -50,9 +80,9 @@ export const useUserStore = create<UserStore>((set, get) => ({
       const data = await response.json();
       set({
         users: page === 1 ? data.items : [...get().users, ...data.items],
-        hasMore: data?.items?.length === 10,
+        hasMore: data.items.length === 10,
         isLoading: false,
-        page: page + 1,
+        page: page + 1, // Move to next page only on successful fetch
       });
     } catch (error) {
       if (error instanceof Error) {
