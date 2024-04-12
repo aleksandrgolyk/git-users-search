@@ -10,7 +10,11 @@ interface UserInterFace {
 const UserSimpleView: React.FC<UserInterFace> = ({ user }) => {
   return (
     <div style={{ display: "flex" }}>
-      <img src={user.avatar_url} alt={user.login} />
+      <img
+        style={{ width: 20, height: 20 }}
+        src={user.avatar_url}
+        alt={user.login}
+      />
 
       <a href={``}>{user.login}</a>
     </div>
