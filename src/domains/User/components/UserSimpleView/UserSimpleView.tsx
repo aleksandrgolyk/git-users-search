@@ -1,4 +1,4 @@
-import React from "react";
+import { Avatar } from "antd";
 
 interface UserInterFace {
   user: {
@@ -16,7 +16,8 @@ const UserSimpleView: React.FC<UserInterFace> = ({ user }) => {
         alt={user.login}
       />
 
-      <a href={``}>{user.login}</a>
+      {/* <a href={``}>{user.login}</a> */}
+      {user.login}
     </div>
   );
 };

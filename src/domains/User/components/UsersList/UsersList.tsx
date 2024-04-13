@@ -3,12 +3,14 @@ import { List, Spin } from "antd";
 import UserSimpleView from "../UserSimpleView";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { useNavigate } from "react-router-dom";
 import { useUserStore } from "store/store";
 
 export const UsersList: React.FC = () => {
   const { ref, inView } = useInView();
   const { users, fetchUsers, isLoading, query, error, hasMore, page } =
     useUserStore();
+  const navigate = useNavigate();
 
   // Effect to trigger loading more users when the last element is in view
   // added timeout to prevent to many requests and get git restrictions
@@ -24,26 +26,28 @@ export const UsersList: React.FC = () => {
       return () => clearTimeout(timeoutId);
     }
   }, [inView, isLoading, hasMore, query, page, fetchUsers]);
-
+  console.log(users);
   return (
     <div
       style={{ display: "flex", flexDirection: "column", position: "relative" }}
     >
-      {/* </div> */}
       {error && <p>Error: {error}</p>}
-      {/* <div> */}
-      {/* {!Boolean(query) && "Enters"} */}
       <Spin spinning={isLoading}>
         <List
-          style={{ maxHeight: "300px", overflow: "auto" }}
+          style={{
+            maxHeight: "300px",
+            overflow: "auto",
+            border: "1px solid red",
+          }}
           dataSource={users}
           locale={{
-            emptyText: !Boolean(query) ? "Enter login" : "No users found",
+            emptyText: !Boolean(query) ? "Enter user login" : "No users found",
           }}
           renderItem={(user, index) => (
             <List.Item
               key={user.id}
               ref={index === users.length - 1 ? ref : null}
+              onClick={() => navigate(`/users/${user.login}`)}
             >
               <UserSimpleView user={user} />
             </List.Item>
@@ -55,26 +59,3 @@ export const UsersList: React.FC = () => {
   );
 };
 export default UsersList;
-
-// import UserSimpleView from "../UserSimpleView";
-// import useUserStore from "store/store";
-
-// const UsersList = () => {
-//   const { users, isLoading, error } = useUserStore((state) => ({
-//     users: state.users,
-//     isLoading: state.isLoading,
-//     error: state.error,
-//   }));
-//   console.log(users);
-//   return (
-//     <div style={{ display: "flex", flexDirection: "column" }}>
-//       {isLoading && <p>Loading...</p>}
-//       {error && <p>Error: {error}</p>}
-//       {users.map((user: any) => (
-//         <li key={user.id}>
-//           <UserSimpleView user={user} />
-//         </li>
-//       ))}
-//     </div>
-//   );
-// };
