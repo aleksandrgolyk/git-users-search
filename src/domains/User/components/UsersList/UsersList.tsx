@@ -15,7 +15,7 @@ export const UsersList: React.FC = () => {
   useEffect(() => {
     // Only run the timeout if all conditions are met
     if (inView && !isLoading && hasMore && query) {
-      const delayInMs = 500; // Delay in milliseconds
+      const delayInMs = 800; // Delay to prevent to many call if user will pull scroll manually to fast
       const timeoutId = setTimeout(() => {
         fetchUsers(query, page);
       }, delayInMs);
@@ -32,10 +32,14 @@ export const UsersList: React.FC = () => {
       {/* </div> */}
       {error && <p>Error: {error}</p>}
       {/* <div> */}
+      {/* {!Boolean(query) && "Enters"} */}
       <Spin spinning={isLoading}>
         <List
           style={{ maxHeight: "300px", overflow: "auto" }}
           dataSource={users}
+          locale={{
+            emptyText: !Boolean(query) ? "Enter login" : "No users found",
+          }}
           renderItem={(user, index) => (
             <List.Item
               key={user.id}
