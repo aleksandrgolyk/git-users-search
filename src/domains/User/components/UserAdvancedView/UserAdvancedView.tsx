@@ -28,7 +28,7 @@ const UserAdvancedView: React.FC<UserAdvancedViewProps> = ({
     <div>
       <Avatar src={userData.avatar_url} size={260} />
       <h1>{userData.login}</h1>
-      folowers: <h1>{userData.followers}</h1>
+      followers: <h1>{userData.followers}</h1>
       following: <h1>{userData.following}</h1>
       company: <h1>{userData.company}</h1>
       email: <h1>{userData.email}</h1>
