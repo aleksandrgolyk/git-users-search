@@ -34,7 +34,6 @@ const useGetUser = (username: string): UseGetUserResult => {
           throw new Error(`GitHub API responded with ${response.status}`);
         }
         const data = await response.json();
-        console.log(data);
         const mappedData: UserData = {
           avatar_url: data.avatar_url,
           login: data.login,

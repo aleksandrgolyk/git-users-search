@@ -1,16 +1,14 @@
 import "./UsersList.css";
 
-import { Empty, List, Spin, Typography } from "antd";
+import { Empty, List, Spin } from "antd";
 
-import NoData from "components/lib/NoData";
 import { Nodata } from "components/lib";
 import UserSimpleView from "../UserSimpleView";
+import { useCallback } from "react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "store/store";
-
-const { Title } = Typography;
 
 export const UsersList: React.FC = () => {
   const { ref, inView } = useInView();
@@ -33,11 +31,24 @@ export const UsersList: React.FC = () => {
     }
   }, [inView, isLoading, hasMore, query, page, fetchUsers]);
 
-  const handleNavigate = (login: string) => navigate(`/users/${login}`);
+  const handleNavigate = useCallback(
+    (login: string) => {
+      navigate(`/users/${login}`);
+    },
+    [navigate]
+  );
+
+  if (error)
+    return (
+      <Empty
+        imageStyle={{ height: 200 }}
+        image={"error.svg"}
+        description={error}
+      />
+    );
 
   return (
     <>
-      {error && <p>Error: {error}</p>}
       <Spin spinning={isLoading}>
         <List
           bordered

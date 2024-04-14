@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 const UserPageView = () => {
   const { id } = useParams<string>();
   const { userData, isLoading, error } = useGetUser(id || "");
-  console.log(userData);
+
   return (
     <UserAdvancedView userData={userData} isLoading={isLoading} error={error} />
   );

@@ -1,4 +1,4 @@
-import { Avatar, Card, Col, Empty, Row, Typography } from "antd";
+import { Avatar, Card, Col, Empty, Row, Spin, Typography } from "antd";
 
 import { Nodata } from "components/lib";
 
@@ -22,9 +22,11 @@ const UserAdvancedView: React.FC<UserAdvancedViewProps> = ({
   isLoading,
   error,
 }) => {
-  if (!userData) return <Nodata />;
-  if (error) return <Empty image={"error.svg"} description={error} />;
+  if (isLoading) return <Spin />;
+  if (error && !isLoading)
+    return <Empty image={"error.svg"} description={error} />;
 
+  if (!userData) return <Nodata />;
   const userDetails = [
     {
       label: "Followers",
