@@ -8,7 +8,8 @@ interface NoDataProps {
 const NoData: React.FC<NoDataProps> = ({ description }) => {
   return (
     <Empty
-      image={"empty.svg"}
+      image={"/empty.svg"}
+      imageStyle={{ height: 200 }}
       description={
         <Title level={4}>
           {description || "No users with this login to show"}

@@ -22,9 +22,7 @@ const UserAdvancedView: React.FC<UserAdvancedViewProps> = ({
   isLoading,
   error,
 }) => {
-  if (isLoading) return <Spin />;
-  if (error && !isLoading)
-    return <Empty image={"error.svg"} description={error} />;
+  if (error) return <Empty image={"/error.svg"} description={error} />;
 
   if (!userData) return <Nodata />;
   const userDetails = [
@@ -52,22 +50,24 @@ const UserAdvancedView: React.FC<UserAdvancedViewProps> = ({
   ];
 
   return (
-    <Card loading={isLoading}>
-      <Row gutter={24}>
-        <Col>
-          <Avatar src={userData.avatar_url} size={260} />
-        </Col>
-        <Col>
-          <h1>{userData.login}</h1>
-          {userDetails.map((item, index) => (
-            <div key={index}>
-              <Text>{item.label}:</Text>{" "}
-              <Text>{item.value || item.defaultValue}</Text>
-            </div>
-          ))}
-        </Col>
-      </Row>
-    </Card>
+    <Spin spinning={isLoading}>
+      <Card loading={isLoading}>
+        <Row gutter={24}>
+          <Col>
+            <Avatar src={userData.avatar_url} size={260} />
+          </Col>
+          <Col>
+            <h1>{userData.login}</h1>
+            {userDetails.map((item, index) => (
+              <div key={index}>
+                <Text>{item.label}:</Text>{" "}
+                <Text>{item.value || item.defaultValue}</Text>
+              </div>
+            ))}
+          </Col>
+        </Row>
+      </Card>
+    </Spin>
   );
 };
 

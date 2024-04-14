@@ -1,3 +1,6 @@
+import "./UsersSearch.css";
+import "./UsersSearch.styled";
+
 import { Empty, Input, Typography } from "antd";
 
 import { UsersList } from "domains/User/components";
@@ -13,7 +16,7 @@ const UserSearch: React.FC = () => {
   };
 
   return (
-    <div style={styles.wrapper}>
+    <div className="wrapper">
       <Input
         size="large"
         placeholder="Search GitHub Users"
@@ -26,9 +29,7 @@ const UserSearch: React.FC = () => {
         <Empty
           imageStyle={styles.imageStyles}
           image={"search.svg"}
-          description={
-            <Title level={4}>"Type user login to find the one"</Title>
-          }
+          description={<Title level={4}>Type user login to find the one</Title>}
         />
       )}
     </div>

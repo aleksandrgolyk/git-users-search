@@ -42,7 +42,7 @@ export const UsersList: React.FC = () => {
     return (
       <Empty
         imageStyle={{ height: 200 }}
-        image={"error.svg"}
+        image={"/error.svg"}
         description={error}
       />
     );
