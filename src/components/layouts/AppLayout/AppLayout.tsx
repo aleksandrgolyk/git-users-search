@@ -13,7 +13,9 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
     <div className="layout">
-      <Title level={4}>Github user search by Oleksandr Holyk</Title>
+      <Title className="title" level={4}>
+        Github user search by Oleksandr Holyk
+      </Title>
       {children}
     </div>
   );

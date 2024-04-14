@@ -2,6 +2,8 @@ import "./UsersList.css";
 
 import { Empty, List, Spin, Typography } from "antd";
 
+import NoData from "components/lib/NoData";
+import { Nodata } from "components/lib";
 import UserSimpleView from "../UserSimpleView";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -40,17 +42,9 @@ export const UsersList: React.FC = () => {
         <List
           bordered
           className="list"
-          // style={styles.listStyles}
           dataSource={users}
           locale={{
-            emptyText: (
-              <Empty
-                image={"empty.svg"}
-                description={
-                  <Title level={4}>"No users with this login to show"</Title>
-                }
-              />
-            ),
+            emptyText: <Nodata />,
           }}
           renderItem={(user, index) => (
             <List.Item

@@ -4,3 +4,6 @@
   padding: 20px;
   overflow: auto;
 }
+.title{
+text-align: end;
+}

@@ -1,5 +1,8 @@
-import { Avatar } from "antd";
+import { Avatar, Card, Col, Empty, Row, Typography } from "antd";
 
+import { Nodata } from "components/lib";
+
+const { Text } = Typography;
 interface UserAdvancedViewProps {
   userData: {
     login: string;
@@ -19,21 +22,50 @@ const UserAdvancedView: React.FC<UserAdvancedViewProps> = ({
   isLoading,
   error,
 }) => {
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!userData) return <div>No user data found.</div>;
-  console.log(userData);
-  // Render user data here
+  if (!userData) return <Nodata />;
+  if (error) return <Empty image={"error.svg"} description={error} />;
+
+  const userDetails = [
+    {
+      label: "Followers",
+      value: userData.followers,
+      defaultValue: "Not available",
+    },
+    {
+      label: "Following",
+      value: userData.following,
+      defaultValue: "Not available",
+    },
+    {
+      label: "Company",
+      value: userData.company,
+      defaultValue: "No company info provided",
+    },
+    {
+      label: "Email",
+      value: userData.email,
+      defaultValue: "No email provided",
+    },
+    { label: "Blog", value: userData.blog, defaultValue: "No blog info" },
+  ];
+
   return (
-    <div>
-      <Avatar src={userData.avatar_url} size={260} />
-      <h1>{userData.login}</h1>
-      followers: <h1>{userData.followers}</h1>
-      following: <h1>{userData.following}</h1>
-      company: <h1>{userData.company}</h1>
-      email: <h1>{userData.email}</h1>
-      blog: <h1>{userData.blog}</h1>
-    </div>
+    <Card loading={isLoading}>
+      <Row gutter={24}>
+        <Col>
+          <Avatar src={userData.avatar_url} size={260} />
+        </Col>
+        <Col>
+          <h1>{userData.login}</h1>
+          {userDetails.map((item, index) => (
+            <div key={index}>
+              <Text>{item.label}:</Text>{" "}
+              <Text>{item.value || item.defaultValue}</Text>
+            </div>
+          ))}
+        </Col>
+      </Row>
+    </Card>
   );
 };
 
