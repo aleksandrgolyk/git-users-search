@@ -1,7 +1,8 @@
+import "./AppLayout.css";
+
 import React, { ReactNode } from "react";
 
 import { Typography } from "antd";
-import styles from "./AppLayout.styled";
 
 const { Title } = Typography;
 
@@ -11,7 +12,7 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   return (
-    <div style={styles.container}>
+    <div className="layout">
       <Title level={4}>Github user search by Oleksandr Holyk</Title>
       {children}
     </div>

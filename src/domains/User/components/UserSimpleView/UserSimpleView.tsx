@@ -1,24 +1,21 @@
-import { Avatar } from "antd";
+import "./UserSimpleView.css";
 
+import { Avatar, List, Typography } from "antd";
+
+const { Text } = Typography;
 interface UserInterFace {
   user: {
     avatar_url: string;
     login: string;
   };
 }
-
 const UserSimpleView: React.FC<UserInterFace> = ({ user }) => {
   return (
-    <div style={{ display: "flex" }}>
-      <img
-        style={{ width: 20, height: 20 }}
-        src={user.avatar_url}
-        alt={user.login}
-      />
-
-      {/* <a href={``}>{user.login}</a> */}
-      {user.login}
-    </div>
+    <List.Item.Meta
+      className="listItem"
+      avatar={<Avatar src={user.avatar_url} />}
+      description={<Text>{user.login}</Text>}
+    />
   );
 };
 

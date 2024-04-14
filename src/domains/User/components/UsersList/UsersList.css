@@ -1,0 +1,14 @@
+.list {
+  max-height: 300px;
+  overflow: auto;
+  margin-right: 0;
+}
+
+.listItem {
+  cursor: pointer;
+  display: flex;
+  align-items: center !important;
+}
+.listItem:hover {
+  background-color: #f0f0f0;
+}

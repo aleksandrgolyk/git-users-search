@@ -1,7 +1,8 @@
+import "./UsersList.css";
+
 import { Empty, List, Spin, Typography } from "antd";
 
 import UserSimpleView from "../UserSimpleView";
-import styles from "./UserList.styled";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +39,8 @@ export const UsersList: React.FC = () => {
       <Spin spinning={isLoading}>
         <List
           bordered
-          style={styles.listStyles}
+          className="list"
+          // style={styles.listStyles}
           dataSource={users}
           locale={{
             emptyText: (
@@ -52,6 +54,7 @@ export const UsersList: React.FC = () => {
           }}
           renderItem={(user, index) => (
             <List.Item
+              className="listItem"
               key={user.id}
               ref={index === users.length - 1 ? ref : null}
               onClick={() => handleNavigate(user.login)}
