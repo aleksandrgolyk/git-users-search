@@ -1,10 +1,13 @@
-import { List, Spin } from "antd";
+import { Empty, List, Spin, Typography } from "antd";
 
 import UserSimpleView from "../UserSimpleView";
+import styles from "./UserList.styled";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "store/store";
+
+const { Title } = Typography;
 
 export const UsersList: React.FC = () => {
   const { ref, inView } = useInView();
@@ -26,36 +29,39 @@ export const UsersList: React.FC = () => {
       return () => clearTimeout(timeoutId);
     }
   }, [inView, isLoading, hasMore, query, page, fetchUsers]);
-  console.log(users);
+
+  const handleNavigate = (login: string) => navigate(`/users/${login}`);
+
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", position: "relative" }}
-    >
+    <>
       {error && <p>Error: {error}</p>}
       <Spin spinning={isLoading}>
         <List
-          style={{
-            maxHeight: "300px",
-            overflow: "auto",
-            border: "1px solid red",
-          }}
+          bordered
+          style={styles.listStyles}
           dataSource={users}
           locale={{
-            emptyText: !Boolean(query) ? "Enter user login" : "No users found",
+            emptyText: (
+              <Empty
+                image={"empty.svg"}
+                description={
+                  <Title level={4}>"No users with this login to show"</Title>
+                }
+              />
+            ),
           }}
           renderItem={(user, index) => (
             <List.Item
               key={user.id}
               ref={index === users.length - 1 ? ref : null}
-              onClick={() => navigate(`/users/${user.login}`)}
+              onClick={() => handleNavigate(user.login)}
             >
               <UserSimpleView user={user} />
             </List.Item>
           )}
         />
       </Spin>
-      {/* </div> */}
-    </div>
+    </>
   );
 };
 export default UsersList;
