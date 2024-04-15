@@ -24,9 +24,8 @@ const useGetUsers = (delay: number = 800) => {
     }, delay);
 
     debouncedSearch(inputValue);
-
     return () => {
-      debouncedSearch.cancel(); // Cleanup on unmount or inputValue change
+      debouncedSearch.cancel();
     };
   }, [inputValue, setQuery, fetchUsers, setUsers, delay]);
 

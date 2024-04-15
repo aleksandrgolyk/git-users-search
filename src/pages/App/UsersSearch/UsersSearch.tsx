@@ -29,7 +29,9 @@ const UserSearch: React.FC = () => {
         <Empty
           imageStyle={styles.imageStyles}
           image={"search.svg"}
-          description={<Title level={4}>Type user login to find the one</Title>}
+          description={
+            <Title level={4}>Type users login to find the one</Title>
+          }
         />
       )}
     </div>
