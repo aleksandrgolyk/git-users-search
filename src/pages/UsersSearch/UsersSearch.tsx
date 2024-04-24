@@ -1,14 +1,13 @@
 import "./UsersSearch.css";
-import "./UsersSearch.styled";
 
 import { Empty, Input, Typography } from "antd";
 
+import { FC } from "react";
 import { UsersList } from "domains/User/components";
-import styles from "./UsersSearch.styled";
 import { useGetUsers } from "domains/User/hooks";
 
 const { Title } = Typography;
-const UserSearch: React.FC = () => {
+const UserSearch: FC = () => {
   const { inputValue, setInputValue } = useGetUsers();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +26,8 @@ const UserSearch: React.FC = () => {
         <UsersList />
       ) : (
         <Empty
-          imageStyle={styles.imageStyles}
+          // prefer not to use inline styles but  parent component doesnt take class name
+          style={{ height: 200 }}
           image={"search.svg"}
           description={
             <Title level={4}>Type users login to find the one</Title>
